@@ -1,0 +1,24 @@
+{
+  "name": "tdd-testes",
+  "version": "1.0.0",
+  "description": "Projeto de testes com TDD usando Vitest",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhonata295/tdd-testes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jhonata295/tdd-testes/issues"
+  },
+  "homepage": "https://github.com/jhonata295/tdd-testes#readme",
+  "devDependencies": {
+    "vitest": "^4.1.4"
+  }
+}
