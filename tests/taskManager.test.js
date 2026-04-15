@@ -285,3 +285,40 @@ describe('toggleTask', () => {
       expect(updated.find(t => t.id === 2)).toBeUndefined();
     });
   });
+
+  describe('getTasks', () => {
+    beforeEach(() => {
+      resetId();
+    });
+  
+    it('deve retornar todas as tarefas', () => {
+      let tasks = addTask([], 'Tarefa 1');
+      tasks = addTask(tasks, 'Tarefa 2');
+  
+      const result = getTasks(tasks);
+  
+      expect(result).toHaveLength(2);
+    });
+  
+    it('deve retornar uma cópia do array (imutabilidade)', () => {
+      const tasks = addTask([], 'Tarefa 1');
+  
+      const result = getTasks(tasks);
+  
+      expect(result).not.toBe(tasks);
+    });
+  
+    it('deve retornar array vazio quando não houver tarefas', () => {
+      const result = getTasks([]);
+  
+      expect(result).toEqual([]);
+    });
+  
+    it('não deve alterar as tarefas originais', () => {
+      const tasks = addTask([], 'Tarefa 1');
+  
+      const result = getTasks(tasks);
+  
+      expect(result[0]).toEqual(tasks[0]);
+    });
+  });
