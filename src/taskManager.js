@@ -41,3 +41,24 @@ export function addTask(tasks, title) {
     const newTask = createTask(title);
     return [...tasks, newTask];
   }
+
+  export function toggleTask(tasks, id) {
+    let found = false;
+  
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {
+        found = true;
+        return {
+          ...task,
+          completed: !task.completed,
+        };
+      }
+      return task;
+    });
+  
+    if (!found) {
+      throw new Error('Tarefa não encontrada');
+    }
+  
+    return updatedTasks;
+  }
