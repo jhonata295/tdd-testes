@@ -8,9 +8,7 @@ function validateTitle(title) {
 
   const trimmed = title.trim();
 
-  if (trimmed.length < 3) return false;
-
-  return true;
+  return trimmed.length >= 3;
 }
 
 // ============================================================
@@ -34,7 +32,7 @@ function addTask(tasks, title) {
 
   const newTask = createTask(title);
 
-  return [...tasks, newTask]; // imutabilidade
+  return [...tasks, newTask];
 }
 
 // ============================================================
@@ -62,36 +60,41 @@ function toggleTask(tasks, id) {
 }
 
 // ============================================================
+// removeTask
+// ============================================================
+function removeTask(tasks, id) {
+  const exists = tasks.some(task => task.id === id);
+
+  if (!exists) {
+    throw new Error('Tarefa não encontrada');
+  }
+
+  return tasks.filter(task => task.id !== id);
+}
+
+// ============================================================
+// getTasks
+// ============================================================
+function getTasks(tasks) {
+  return [...tasks];
+}
+
+// ============================================================
 // resetId (usado nos testes)
 // ============================================================
 function resetId() {
   currentId = 1;
 }
 
-
 // ============================================================
 // EXPORTS
 // ============================================================
 module.exports = {
-    validateTitle,
-    createTask,
-    addTask,
-    toggleTask,
-    removeTask,
-    getTasks,
-    resetId,
-  };
-
-  function removeTask(tasks, id) {
-    const exists = tasks.some(task => task.id === id);
-  
-    if (!exists) {
-      throw new Error('Tarefa não encontrada');
-    }
-  
-    return tasks.filter(task => task.id !== id);
-  }
-
-  function getTasks(tasks) {
-    return [...tasks];
-  }
+  validateTitle,
+  createTask,
+  addTask,
+  toggleTask,
+  removeTask,
+  getTasks,
+  resetId,
+};
