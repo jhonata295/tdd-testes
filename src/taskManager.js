@@ -1,3 +1,9 @@
+let _nextId = 1;
+
+export function resetId() {
+  _nextId = 1;
+}
+
 // ============================================================
 // taskManager.js
 // ============================================================
@@ -9,4 +15,16 @@ export function validateTitle(title) {
   
     const trimmed = title.trim();
     return trimmed.length >= 3;
+  }
+
+  // ------------------------------------------------------------
+// Criação
+// ------------------------------------------------------------
+
+export function createTask(title) {
+    return {
+      id: _nextId++,
+      title: title.trim(),
+      completed: false,
+    };
   }
