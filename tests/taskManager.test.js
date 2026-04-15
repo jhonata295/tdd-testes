@@ -195,3 +195,50 @@ describe('toggleTask', () => {
       expect(() => toggleTask(tasks, 999)).toThrow('Tarefa não encontrada');
     });
   });
+
+  describe('toggleTask', () => {
+    beforeEach(() => {
+      resetId();
+    });
+  
+    it('deve alternar completed de false para true', () => {
+      let tasks = addTask([], 'Tarefa 1');
+  
+      tasks = toggleTask(tasks, 1);
+  
+      expect(tasks[0].completed).toBe(true);
+    });
+  
+    it('deve alternar completed de true para false', () => {
+      let tasks = addTask([], 'Tarefa 1');
+      tasks = toggleTask(tasks, 1);
+  
+      tasks = toggleTask(tasks, 1);
+  
+      expect(tasks[0].completed).toBe(false);
+    });
+  
+    it('deve manter outras tarefas inalteradas', () => {
+      let tasks = addTask([], 'Tarefa 1');
+      tasks = addTask(tasks, 'Tarefa 2');
+  
+      tasks = toggleTask(tasks, 1);
+  
+      expect(tasks[0].completed).toBe(true);
+      expect(tasks[1].completed).toBe(false);
+    });
+  
+    it('deve retornar um NOVO array (imutabilidade)', () => {
+      const tasks = addTask([], 'Tarefa 1');
+  
+      const updated = toggleTask(tasks, 1);
+  
+      expect(updated).not.toBe(tasks);
+    });
+  
+    it('deve lançar erro se o ID não existir', () => {
+      const tasks = addTask([], 'Tarefa 1');
+  
+      expect(() => toggleTask(tasks, 999)).toThrow('Tarefa não encontrada');
+    });
+  });
