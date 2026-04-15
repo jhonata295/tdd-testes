@@ -242,3 +242,45 @@ describe('toggleTask', () => {
       expect(() => toggleTask(tasks, 999)).toThrow('Tarefa não encontrada');
     });
   });
+
+  describe('removeTask', () => {
+    beforeEach(() => {
+      resetId();
+    });
+  
+    it('deve remover uma tarefa pelo ID', () => {
+      let tasks = addTask([], 'Tarefa 1');
+      tasks = addTask(tasks, 'Tarefa 2');
+  
+      const updated = removeTask(tasks, 1);
+  
+      expect(updated).toHaveLength(1);
+      expect(updated[0].id).toBe(2);
+    });
+  
+    it('deve retornar um NOVO array (imutabilidade)', () => {
+      const tasks = addTask([], 'Tarefa 1');
+  
+      const updated = removeTask(tasks, 1);
+  
+      expect(updated).not.toBe(tasks);
+    });
+  
+    it('deve lançar erro se o ID não existir', () => {
+      const tasks = addTask([], 'Tarefa 1');
+  
+      expect(() => removeTask(tasks, 999))
+        .toThrow('Tarefa não encontrada');
+    });
+  
+    it('deve remover apenas a tarefa correta', () => {
+      let tasks = addTask([], 'Tarefa 1');
+      tasks = addTask(tasks, 'Tarefa 2');
+      tasks = addTask(tasks, 'Tarefa 3');
+  
+      const updated = removeTask(tasks, 2);
+  
+      expect(updated).toHaveLength(2);
+      expect(updated.find(t => t.id === 2)).toBeUndefined();
+    });
+  });
