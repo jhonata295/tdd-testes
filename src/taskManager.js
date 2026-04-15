@@ -1,64 +1,80 @@
-let _nextId = 1;
+let currentId = 1;
 
-export function resetId() {
-  _nextId = 1;
+// ============================================================
+// validateTitle
+// ============================================================
+function validateTitle(title) {
+  if (typeof title !== 'string') return false;
+
+  const trimmed = title.trim();
+
+  if (trimmed.length < 3) return false;
+
+  return true;
 }
 
 // ============================================================
-// taskManager.js
+// createTask
 // ============================================================
+function createTask(title) {
+  return {
+    id: currentId++,
+    title: title.trim(),
+    completed: false,
+  };
+}
 
-export function validateTitle(title) {
-    if (typeof title !== 'string') {
-      return false;
+// ============================================================
+// addTask
+// ============================================================
+function addTask(tasks, title) {
+  if (!validateTitle(title)) {
+    throw new Error('Título inválido');
+  }
+
+  const newTask = createTask(title);
+
+  return [...tasks, newTask]; // imutabilidade
+}
+
+// ============================================================
+// toggleTask
+// ============================================================
+function toggleTask(tasks, id) {
+  let found = false;
+
+  const updatedTasks = tasks.map(task => {
+    if (task.id === id) {
+      found = true;
+      return {
+        ...task,
+        completed: !task.completed,
+      };
     }
-  
-    const trimmed = title.trim();
-    return trimmed.length >= 3;
+    return task;
+  });
+
+  if (!found) {
+    throw new Error('Tarefa não encontrada');
   }
 
-  // ------------------------------------------------------------
-// Criação
-// ------------------------------------------------------------
+  return updatedTasks;
+}
 
-export function createTask(title) {
-    return {
-      id: _nextId++,
-      title: title.trim(),
-      completed: false,
-    };
-  }
+// ============================================================
+// resetId (usado nos testes)
+// ============================================================
+function resetId() {
+  currentId = 1;
+}
 
-  // ------------------------------------------------------------
-// Adição com validação
-// ------------------------------------------------------------
-
-export function addTask(tasks, title) {
-    if (!validateTitle(title)) {
-      throw new Error('Título inválido');
-    }
-  
-    const newTask = createTask(title);
-    return [...tasks, newTask];
-  }
-
-  export function toggleTask(tasks, id) {
-    let found = false;
-  
-    const updatedTasks = tasks.map(task => {
-      if (task.id === id) {
-        found = true;
-        return {
-          ...task,
-          completed: !task.completed,
-        };
-      }
-      return task;
-    });
-  
-    if (!found) {
-      throw new Error('Tarefa não encontrada');
-    }
-  
-    return updatedTasks;
-  }
+// ============================================================
+// EXPORTS
+// ============================================================
+module.exports = {
+  validateTitle,
+  createTask,
+  addTask,
+  toggleTask,
+  resetId,
+};
