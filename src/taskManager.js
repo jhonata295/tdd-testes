@@ -78,6 +78,7 @@ module.exports = {
     addTask,
     toggleTask,
     removeTask,
+    getTasks,
     resetId,
   };
 
@@ -89,4 +90,8 @@ module.exports = {
     }
   
     return tasks.filter(task => task.id !== id);
+  }
+
+  function getTasks(tasks) {
+    return [...tasks];
   }
