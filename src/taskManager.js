@@ -68,13 +68,25 @@ function resetId() {
   currentId = 1;
 }
 
+
 // ============================================================
 // EXPORTS
 // ============================================================
 module.exports = {
-  validateTitle,
-  createTask,
-  addTask,
-  toggleTask,
-  resetId,
-};
+    validateTitle,
+    createTask,
+    addTask,
+    toggleTask,
+    removeTask,
+    resetId,
+  };
+
+  function removeTask(tasks, id) {
+    const exists = tasks.some(task => task.id === id);
+  
+    if (!exists) {
+      throw new Error('Tarefa não encontrada');
+    }
+  
+    return tasks.filter(task => task.id !== id);
+  }

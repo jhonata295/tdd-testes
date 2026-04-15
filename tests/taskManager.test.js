@@ -5,6 +5,7 @@ import {
   validateTitle,
   createTask,
   addTask,
+  removeTask,
   resetId,
 } from '../src/taskManager.js';
 
