@@ -1,3 +1,4 @@
+import { toggleTask } from '../src/taskManager.js';
 import { describe, it, expect, beforeEach } from 'vitest';
 
 import {
@@ -143,3 +144,54 @@ describe('addTask', () => {
     expect(() => addTask([], 42)).toThrow('Título inválido');
   });
 });
+
+// ============================================================
+// 4. toggleTask
+// ============================================================
+
+describe('toggleTask', () => {
+    beforeEach(() => {
+      resetId();
+    });
+  
+    it('deve alternar completed de false para true', () => {
+      let tasks = addTask([], 'Tarefa 1');
+  
+      const updated = toggleTask(tasks, 1);
+  
+      expect(updated[0].completed).toBe(true);
+    });
+  
+    it('deve alternar completed de true para false', () => {
+      let tasks = addTask([], 'Tarefa 1');
+      tasks = toggleTask(tasks, 1);
+  
+      const updated = toggleTask(tasks, 1);
+  
+      expect(updated[0].completed).toBe(false);
+    });
+  
+    it('deve retornar um NOVO array (imutabilidade)', () => {
+      const tasks = addTask([], 'Tarefa 1');
+  
+      const updated = toggleTask(tasks, 1);
+  
+      expect(updated).not.toBe(tasks);
+    });
+  
+    it('não deve alterar outras tarefas', () => {
+      let tasks = addTask([], 'Tarefa 1');
+      tasks = addTask(tasks, 'Tarefa 2');
+  
+      const updated = toggleTask(tasks, 1);
+  
+      expect(updated[0].completed).toBe(true);
+      expect(updated[1].completed).toBe(false);
+    });
+  
+    it('deve lançar erro se ID não existir', () => {
+      const tasks = addTask([], 'Tarefa 1');
+  
+      expect(() => toggleTask(tasks, 999)).toThrow('Tarefa não encontrada');
+    });
+  });
